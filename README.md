@@ -1,3 +1,6 @@
+# ARCHIVE of PizzaSlices by Pizzahawaii for TurtleWoW. The original repository was deleted.
+I am not the original Author and am not keeping it updated.
+
 # 🍕 PizzaSlices
 
 Radial action menus for [TurtleWoW](https://turtle-wow.org). A simplified [OPie](https://www.curseforge.com/wow/addons/opie) clone.
