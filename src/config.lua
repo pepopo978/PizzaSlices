@@ -6,7 +6,7 @@ local defaultConfig = {
     rotateOnClose = 1,
   },
   showMacroNames = false,
-  showOutfitNames = false,
+  showOutfitNames = true,
   blackBorders = false,
   customIcons = {},
 }
