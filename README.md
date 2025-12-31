@@ -88,13 +88,6 @@ To remove an item from a ring, simply drag & drop it into the red trash can area
 
 Please check the [issue list](https://github.com/Pizzahawaiii/PizzaSlices/issues) to see if it was reported already. If not, create a new issue or contact me on Discord or ingame (see below).
 
-## Contact
-
-You're always more than welcome to ask questions or provide any kind of feedback.
-
-- **Turtle Discord**: Pizza
-- **Nordanaar**: Pizzahawaii, Pizzamista, Pizzapimp, Pizzapaws, Pizzapog<br />If you see anyone whose name starts with 'Pizza', chances are it's me. 
-
 ## Credits
 
 Thanks to [foxlit](https://www.curseforge.com/members/foxlit) for the inspiration! 🚀
