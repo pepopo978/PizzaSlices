@@ -1,9 +1,9 @@
-# ARCHIVE of PizzaSlices by Pizzahawaii for TurtleWoW. The original repository was deleted.
+# ARCHIVE of PizzaSlices by Pizzahawaii. The original repository was deleted.
 I am not the original Author and am not keeping it updated.
 
 # 🍕 PizzaSlices
 
-Radial action menus for [TurtleWoW](https://turtle-wow.org). A simplified [OPie](https://www.curseforge.com/wow/addons/opie) clone.
+A simplified [OPie](https://www.curseforge.com/wow/addons/opie) clone.
 
 <img src="https://raw.githubusercontent.com/Pizzahawaiii/media/refs/heads/main/PizzaSlices/demo.gif" width="100%">
 
@@ -13,57 +13,9 @@ Radial action menus for [TurtleWoW](https://turtle-wow.org). A simplified [OPie]
 2. Copy the "PizzaSlices-main" folder to `<WoW>/Interface/AddOns` and rename it to "PizzaSlices"
 3. (Re)start WoW
 
-## Version Upgrade
-
-To update to the latest version, delete your `<WoW>/Interface/AddOns/PizzaSlices` folder and follow the [installation steps](#install) again.
-
-Check the [TurtleWoW forum thread](https://forum.turtle-wow.org/viewtopic.php?f=18&t=19173) or [commit history](https://github.com/Pizzahawaiii/PizzaSlices/commits/main) to see the latest changes.
-
 ## Features
 
 PizzaSlices lets you create custom rings, fill them with various types of actions and bind them to different keys. It doesn't reuse any of your existing action buttons so you won't lose any of that precious action bar space.
-
-### Raid Marks
-
-<img src="https://raw.githubusercontent.com/Pizzahawaiii/media/refs/heads/main/PizzaSlices/raidmarks.gif" width="50%" align="left" />
-
-Assign any raid marks quickly and easily with the press of a single button, no matter if you're using [SoloRaidTargetIcons](https://github.com/refaim/SoloRaidTargetIcons) or in a group/raid. There's also a special action to instantly clear all previously assigned raid marks.
-<br clear="left"/>
-
-### Abilities
-
-<img src="https://raw.githubusercontent.com/Pizzahawaiii/media/refs/heads/main/PizzaSlices/abilities.gif" width="50%" align="left" />
-
-You can add all your active abilities to rings. Buffs, auras, hunter aspects, or even damage and healing abilities if you really want to - go crazy!
-<br clear="left"/>
-
-### Mounts
-
-<img src="https://raw.githubusercontent.com/Pizzahawaiii/media/refs/heads/main/PizzaSlices/mounts.gif" width="50%" align="left" />
-
-All your mounts can be added to rings as well, anything you see in the 'Mounts' tab in your spellbook.
-<br clear="left"/>
-
-### Toys & Companions
-
-<img src="https://raw.githubusercontent.com/Pizzahawaiii/media/refs/heads/main/PizzaSlices/toys-companions.gif" width="50%" align="left" />
-
-Anything from the 'Toys' and 'Companions' tabs in your spellbook can also be added to rings.
-<br clear="left"/>
-
-### Professions & General
-
-<img src="https://raw.githubusercontent.com/Pizzahawaiii/media/refs/heads/main/PizzaSlices/professions.gif" width="50%" align="left" />
-
-Your professions and anything else listed in the 'General' tab of your spellbook are available as well. Excluding passive abilities, obviously.
-<br clear="left"/>
-
-### Macros
-
-<img src="https://raw.githubusercontent.com/Pizzahawaiii/media/refs/heads/main/PizzaSlices/macros.gif" width="50%" align="left" />
-
-You can also add macros to rings if you need even more flexibility.
-<br clear="left"/>
 
 ### ItemRack Sets
 
@@ -71,6 +23,10 @@ You can also add macros to rings if you need even more flexibility.
 
 If you're using ItemRack, you can also add your gear sets to rings to quickly change outfits on the fly.
 <br clear="left"/>
+
+### Outfitter Sets
+
+Will display complete and partial outfits.  After adding outfits to a ring you can right click them to choose a custom icon.
 
 ## Opening Rings via Macros
 
