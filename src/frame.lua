@@ -95,48 +95,28 @@ PizzaSlices:RegisterModule('frame', function ()
         f.cdtext:Hide()
       end
 
+      local shouldShowText = false
+      local displayName = nil
+
       if string.sub(slice.action, 1, 6) == 'macro:' and C.showMacroNames then
-        local macroName = string.gsub(slice.name, 'Macro: ', '')
+        displayName = string.gsub(slice.name, 'Macro: ', '')
+        shouldShowText = true
+      elseif (string.sub(slice.action, 1, 18) == 'outfitter-complete' or string.sub(slice.action, 1, 17) == 'outfitter-partial') and C.showOutfitNames then
+        displayName = string.gsub(slice.name, 'Outfitter: ', '')
+        shouldShowText = true
+      end
+
+      if shouldShowText and displayName then
         if not f.text then
           f.text = f:CreateFontString(f:GetName() .. 'Text', 'OVERLAY', 'GameFontWhite')
           f.text:SetPoint('TOP', f, 'BOTTOM', 0, -5)
           f.text:SetFont(STANDARD_TEXT_FONT, 14, 'OUTLINE')
           f.text:SetTextColor(1, 1, 1, 1)
         end
-        f.text:SetText(macroName)
+        f.text:SetText(displayName)
         f.text:Show()
       elseif f.text then
         f.text:Hide()
-      end
-
-      if slice.spellId or slice.itemId then
-        local start, duration, enable
-
-        if slice.spellId then
-          local _, spellSlot = PS.utils.hasSpell(slice.name)
-          if spellSlot then
-            start, duration, enable = GetSpellCooldown(spellSlot, 'BOOKTYPE_SPELL')
-          end
-        else
-          local bag, slot = PS.utils.findItem(slice.name)
-          if bag and slot then
-            start, duration, enable = GetContainerItemCooldown(bag, slot)
-          end
-        end
-
-        if start and duration and duration > 0 then
-          f.cd:Show()
-          CooldownFrame_SetTimer(f.cd, start, duration, enable)
-          f.cdtext:Show()
-          f.cdtext.startTime = start
-          f.cdtext.duration = duration
-        else
-          f.cd:Hide()
-          f.cdtext:Hide()
-        end
-      else
-        f.cd:Hide()
-        f.cdtext:Hide()
       end
 
       f.radius = radius
@@ -149,7 +129,21 @@ PizzaSlices:RegisterModule('frame', function ()
         f.tex = f:CreateTexture(f:GetName() .. 'Tex', 'ARTWORK')
       end
       f.tex:SetAllPoints(f)
-      f.tex:SetTexture(ring.slices[idx].tex)
+      -- Use custom icon if set, otherwise use the default icon
+      local slice = ring.slices[idx]
+      local iconPath = slice.tex
+
+      -- Check slice object first, then fall back to config lookup
+      if slice.customIcon then
+        iconPath = slice.customIcon
+      elseif PS.currentRingIdx and PS.settings and PS.settings.getCustomIcon then
+        local customIcon = PS.settings.getCustomIcon(PS.currentRingIdx, idx)
+        if customIcon then
+          iconPath = customIcon
+        end
+      end
+
+      f.tex:SetTexture(iconPath)
       f.tex:SetAlpha(0)
 
       if not f.borderlow then

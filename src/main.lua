@@ -101,39 +101,6 @@ function PS:Deselect()
 end
 
 local actions = {
-  spell = function (v, slice)
-    local spellName = v == '<name>' and slice.name or v
-    if slice.rank then
-      spellName = spellName .. '(' .. slice.rank .. ')'
-    elseif string.find(spellName, '%(%w+%)') then
-      -- See https://vanilla-wow-archive.fandom.com/wiki/API_CastSpellByName#Notes
-      spellName = spellName .. '()'
-    end
-    CastSpellByName(spellName)
-  end,
-
-  raidmark = function (v)
-    local isSolo = GetNumPartyMembers() == 0 and GetNumRaidMembers() == 0
-    local soloRaidMark = PS.utils.hasSuperWoW() and isSolo
-
-    if v == 'clear' then
-      if PS.utils.hasSuperWoW() then
-        for i = 1, 8 do
-          if UnitExists('mark' .. i) then
-            SetRaidTarget('mark' .. i, 0, soloRaidMark)
-          end
-        end
-      else
-        for i = 1, 8 do
-          SetRaidTarget('player', i, soloRaidMark)
-        end
-        PS.clearRaidTargetAt = GetTime() + .15
-      end
-    else
-      SetRaidTarget('target', tonumber(v), soloRaidMark)
-    end
-  end,
-
   itemrack = function (v, slice)
     if v == '<name>' then
       local _, _, setName = PS.utils.strSplit(slice.name, ' ')
@@ -153,22 +120,42 @@ local actions = {
     end
   end,
 
-  item = function (v, slice)
-    local bag, slot = PS.utils.findItem(slice.name)
-    if bag and slot then
-      if IsShiftKeyDown() then
-        PickupContainerItem(bag, slot)
-        if CursorHasItem() then
-          local link = GetContainerItemLink(bag, slot)
-          if link then
-            local _, _, name = string.find(link, '%[(.+)%]')
-            if name then
-              UseItemByName(name)
+  ['outfitter-complete'] = function (v, slice)
+    if Outfitter_WearOutfit and Outfitter_GetOutfitsByCategoryID then
+      local outfitName = v
+      if v == '<name>' then
+        outfitName = string.gsub(slice.name, 'Outfitter: ', '')
+      end
+      if outfitName then
+        local outfits = Outfitter_GetOutfitsByCategoryID("Complete")
+        if outfits then
+          for _, outfit in pairs(outfits) do
+            if outfit.Name == outfitName then
+              Outfitter_WearOutfit(outfit, "Complete")
+              break
             end
           end
         end
-      else
-        UseContainerItem(bag, slot)
+      end
+    end
+  end,
+
+  ['outfitter-partial'] = function (v, slice)
+    if Outfitter_WearOutfit and Outfitter_GetOutfitsByCategoryID then
+      local outfitName = v
+      if v == '<name>' then
+        outfitName = string.gsub(slice.name, 'Outfitter: ', '')
+      end
+      if outfitName then
+        local outfits = Outfitter_GetOutfitsByCategoryID("Partial")
+        if outfits then
+          for _, outfit in pairs(outfits) do
+            if outfit.Name == outfitName then
+              Outfitter_WearOutfit(outfit, "Partial")
+              break
+            end
+          end
+        end
       end
     end
   end,
@@ -189,6 +176,7 @@ end
 function PS:Open(ringIdx, fromCommand)
   if not PizzaSlices_rings[ringIdx] then return end
 
+  PS.currentRingIdx = ringIdx
   local ring = PS.utils.clone(PizzaSlices_rings[ringIdx])
   if not ring or PS.utils.length(ring.slices) == 0 then
     PS.open = false
@@ -251,7 +239,6 @@ function PS:Close()
 end
 
 PS:RegisterEvent('ADDON_LOADED')
-PS:RegisterEvent('CHAT_MSG_CHANNEL')
 PS:SetScript('OnEvent', function ()
   if event == 'ADDON_LOADED' and arg1 == PS.name then
     PS:LoadConfig()
@@ -265,29 +252,5 @@ PS:SetScript('OnEvent', function ()
         PS[moduleName].init()
       end
     end
-  end
-
-  if event == 'CHAT_MSG_CHANNEL' and arg2 ~= UnitName('player') then
-    local _, _, source = string.find(arg4, '(%d+)%.')
-    local channelName
-
-    if source then
-      _, channelName = GetChannelName(source)
-    end
-
-    if channelName == PS.channelName and string.sub(arg1, 1, 11) == PS:GetName() then
-      local remoteVersion = tonumber(string.sub(arg1, 13, 17))
-      if remoteVersion > PS.utils.getVersionNumber() and not PS.updateNotified then
-        PS:Print('New version available! https://github.com/Pizzahawaiii/PizzaSlices')
-        PS.updateNotified = true
-      end
-    end
-  end
-end)
-
-PS:SetScript('OnUpdate', function ()
-  if PS.clearRaidTargetAt and GetTime() > PS.clearRaidTargetAt then
-    SetRaidTarget('player', 0)
-    PS.clearRaidTargetAt = nil
   end
 end)
